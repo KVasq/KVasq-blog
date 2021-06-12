@@ -1,7 +1,7 @@
 ---
 title: R Analysis - $15 Minimum Wage
 author: Kevin Vasquez
-date: '2021-06-04'
+date: '2021-06-11'
 slug: [min-wage-2020]
 categories:
   - R
