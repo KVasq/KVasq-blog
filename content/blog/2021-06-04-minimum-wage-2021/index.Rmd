@@ -1,16 +1,16 @@
 ---
-title: R Analysis - $15 Minimum Wage
-author: Kevin Vasquez
+title: "R Analysis - $15 Minimum Wage"
+author: "Kevin Vasquez"
 date: '2021-06-11'
-slug: [min-wage-2020]
+slug: min-wage-2020
 categories:
-  - R
-  - Politics
+- R
+- Politics
 tags:
-  - politics
-  - economics
-  - policy
-  - minimum wage
+- politics
+- economics
+- policy
+- minimum wage
 meta_img: images/image.jpg
 description: Description for the page
 ---
@@ -22,13 +22,13 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 
 ## Part 1 : Too High or Too Low?
 
-During the drafting and amendment phases of the American Rescure Plan bill, Democrats in the House and Senate proposed the [Raise the Wage Act](https://www.congress.gov/congressional-report/116th-congress/house-report/150) which aimed to incremently increase the federal minimum wage to \$15 by 2025, from the \$7.25 wage legalised since 2009. Although it eventually wasn't included in the passed bill, it remains a key point in the wish-list of progressive Congress democrats. Eighteen states have approved bills to raise the state floor to \$15, including most recently [Florida](https://www.cnbc.com/2020/11/04/florida-votes-to-raise-minimum-wage-to-15-in-2020-election.html) which gave its majority vote to Trump in the 2020 election, this indicates bi-partisan support on thie topic. However, aside from political feasibility, let's take the role of a skeptic economist and look into if \$15 is an appropriate national limit.
+During the drafting and amendment phases of the American Rescue Plan bill, Democrats in the House and Senate proposed the [Raise the Wage Act](https://www.congress.gov/congressional-report/116th-congress/house-report/150) which aimed to incrementally increase the federal minimum wage to \$15 by 2025, from the \$7.25 wage legalized since 2009. Although it eventually wasn't included in the passed bill, it remains a key point in the wish-list of progressives in Congress and online. Eighteen states have approved bills to raise the state floor to \$15, including most recently [Florida](https://www.cnbc.com/2020/11/04/florida-votes-to-raise-minimum-wage-to-15-in-2020-election.html) which gave its majority vote to Trump in the 2020 election, a key indicator of bi-partisan support on the topic. However, aside from political feasibility, let's take the role of a skeptic economist and look into what effects \$15 could have across state economies and see if it adheres to consensus around minimum wage setting guidelines.
 
-US [nation-wide analysis](https://www.cbo.gov/system/files/2019-07/CBO-55410-MinimumWage2019.pdf) by the Congressional Budget Office shows mild to significant wage increases as the minimum increases to \$15, with 17 million workers seeing their wage increasing to meet the minimum. However the number of those that are estimated to be lifted out of poverty by this increase is estimated to match the number of those that would lose employment as a direct effect of wage increases. 
+In 2019, a [nation-wide report](https://www.cbo.gov/system/files/2019-07/CBO-55410-MinimumWage2019.pdf) was was commissioned by the Congressional Budget Office to see what effect raising the federal minimum wage by 2025 had on the population in terms of income and unemployment. The report determined that US workers would see mild to significant wage increases as the minimum increases to \$15, with 17 million workers seeing their wage increasing to meet the minimum. However, the resulting outcome of such wage shifts would be mixed, as the number of those that are estimated to be lifted out of poverty match the number of those that would lose employment as a direct effect of wage increases. Higher minimum wage in general can have a lot of nuanced macro-economic effects to consider, such as possible wealth distribution, the pricing of goods and services, and monopsony situations, however as strictly an instrument for ensuring livable wages for workers, deciding on a number can be somewhat of a balancing act.
 
-To deem a "safe" threshold for minimum wage, a common metric used is the [ratio of minimum wage to median wage](https://www.ilo.org/global/topics/wages/minimum-wages/setting-adjusting/WCMS_439253/lang--en/index.htm), which most developed countries tend to keep between [40% to 60%](https://stats.oecd.org/Index.aspx?DataSetCode=MIN2AVE#). We'll use this metric on a dataset of overall wages in 389 metro area in the US and see how many under a \$15 minimum wage would lie within this threshold. All wages in the dataset are adjusted on the average [CPI projected inflation](https://knoema.com/kyaewad/us-inflation-forecast-2021-2022-and-long-term-to-2030-data-and-charts) over the next 5 years.
+To deem a "safe" threshold for minimum wage, a common metric used is the [ratio of minimum wage to median wage](https://www.ilo.org/global/topics/wages/minimum-wages/setting-adjusting/WCMS_439253/lang--en/index.htm), which most developed countries tend to keep between [40% to 60%](https://stats.oecd.org/Index.aspx?DataSetCode=MIN2AVE#). We'll use these as our maximum and minimum thresholds on a Census Bureau dataset of wages in 389 metro area in the US and see how many places would lie within this threshold. All wages in the dataset are adjusted on the average [CPI projected inflation](https://knoema.com/kyaewad/us-inflation-forecast-2021-2022-and-long-term-to-2030-data-and-charts) over the next 5 years to 2025, when the increased minimum wage is in full effect.
 
-**Out of the 389 metro areas, 35 fall under the maximum 60% threshold and 6 areas under 50% - only 9% of metro areas are within the "safe" threshold for minimum wage.**
+**Out of the 389 metro areas, 35 fall under the maximum 60% threshold and 6 areas under 50% - only 9% of metro areas are within the "safe" thresholds for minimum wage.**
 
 Below is the table of the metropolitan areas in this threshold:
 
@@ -90,7 +90,7 @@ summarise(h_median_df, AREA_TITLE,
 
 ## Part 2: One Size Fits All?
 
-The analysis up to now invites the question of "what would be a more appropriate national wage if not \$15?". In addition to this we'll invite another question, "Should the US minimum wage be a federal issue or should we heed to state legislature?" We'll try to answer these from a stats perspective given an ideal scenario within the criterea we set before. Below are charts showing wages at 60% of the associated area's inflation adjusted median, as well as the mean wage for each state:
+With this revelation, the question invited now is "what would be a more appropriate national wage if not \$15?". To go one step ahead, we'll invite another question: "Should the US minimum wage be a federal issue or should we heed to state legislature?" We'll try to answer these from a stats perspective, exploring within the criteria we set before. Below are charts showing wages at 60% of the associated area's inflation adjusted median, as well as the mean wage for each state:
 
 ```{r, chart-estimate, echo=FALSE, message=FALSE, warning=FALSE}
 library(cowplot)
@@ -108,16 +108,16 @@ draw_plot_estimate <- function(r) {
     geom_point(aes(color=PRIM_STATE, text = sprintf("Area: %s<br>Sixty Percent of Adjusted Median Wage: $%s", AREA_TITLE,SIXTY_PERCENT_ADJ)), alpha=0.8, size=5) +
     geom_hline(yintercept=15, linetype="dashed", size=1.2) +
     theme_minimal_hgrid() +
-    labs(title = "Minimum Wage Proposed Estimates for Each Metropolitan Area", 
+    labs(title = "Min Wage Estimates - Sixty Percent Median Wage for Each Metropolitan Area", 
          subtitle = sprintf("%s",r), color = "", shape="", x="Metropolitan Areas per State",
          y="Wage ($)") +
     theme(axis.ticks.x = element_blank(), axis.text.x = element_blank(),
           plot.title = element_text(size = 12)) +
     stat_summary(fun = "mean", fun.min = "mean", fun.max="mean",
-                 color = "red", size = 3, aes(shape="Mean"),geom = "point") +
+                 color = "red", size = 3, aes(shape="State Mean"),geom = "point") +
     scale_color_manual(values = cbp2) 
     plot <- ggplotly(plot, tooltip = "text") %>%
-    layout(title = list(text = paste0("Minimum Wage Proposed Estimates for Each Metropolitan Area",
+    layout(title = list(text = paste0("Min Wage Estimates - Sixty Percent Median Wage for Each Metro Area",
                                       '<br>',
                                       '<sup>',
                                       r,
@@ -162,9 +162,60 @@ draw_plot_estimate("Far West")
 
   
 
-Using the mean of all proposed area wages in a state may not be the most thorough metric (doesn't consider area population or occupational demographics) but should give a relative indicator for theoretically "ideal" wages in each state, which are shown below:
+These plots show how much of a spectrum state economies exist on, which re-illuminates each state's identity in the country's greater union. Should the federal government offer a one-size fits all solution over all state economies? That's not something I aim to answer, but for the sake of curiosity let's say no and follow an alternate time-line where instead of $15 nationwide, the Raise the Wage Act stated that the wage be increased to 60% median wage of each state. 
 
-```{r, table-estimated, echo=FALSE}
+Using the mean of all our previously estimated "ideal" area wages in a state may not be the most thorough approach (doesn't consider area population or occupational demographics) but should give a relative indicator for theoretically "ideal" state minimum wages, which are shown below:
+
+```{r, map-setup, echo=FALSE, results=FALSE, message=FALSE}
+library(leaflet)
+library(tigris)
+library(dplyr)
+
+min_estimates <- c()
+
+for (state in unique(h_median_df$PRIM_STATE)) {
+  min_estimates <- c(min_estimates, mean(h_median_df[h_median_df$PRIM_STATE == state,]$SIXTY_PERCENT_ADJ))
+}
+
+state_minimums <- data.frame(STATE = unique(h_median_df$PRIM_STATE), MIN_ESTIMATE = min_estimates)
+
+states <- states(cb=T)
+```
+
+```{r, map-estimated, echo=FALSE, results=TRUE, message=FALSE}
+states_merged <- geo_join(states, state_minimums, "STUSPS", "STATE")
+
+map_pal <- colorNumeric("Greens", domain=states_merged$MIN_ESTIMATE)
+
+states_merged <- subset(states_merged, !is.na(MIN_ESTIMATE))
+
+popup_sb <- paste0("Ideal Min Wage: $", round(states_merged$MIN_ESTIMATE, digits=2))
+
+leaflet() %>%
+  addProviderTiles("CartoDB.Positron") %>%
+  setView(-98.483330, 38.712046, zoom = 4) %>% 
+  addPolygons(data = states_merged , 
+              fillColor = ~map_pal(states_merged$MIN_ESTIMATE), 
+              fillOpacity = 0.7, 
+              weight = 0.2, 
+              smoothFactor = 0.2,
+              labelOptions = labelOptions(
+                style = list("font-weight" = "normal", padding = "3px 8px"),
+                textsize = "15px",
+                direction = "auto"),
+              highlight = highlightOptions(
+                weight = 5,
+                color = "#666",
+                fillOpacity = 0.7,
+                bringToFront = TRUE), 
+              label = popup_sb) %>%
+  addLegend(pal = map_pal, 
+            values = states_merged$MIN_ESTIMATE, 
+            position = "bottomright", 
+            title = "Calculated Max <br/>Ideal Min Wage ($)")
+```
+
+```{r, table-estimated, echo=FALSE, message=FALSE, warning=FALSE}
 min_estimates <- c()
 
 for (state in unique(h_median_df$PRIM_STATE)) {
@@ -182,11 +233,11 @@ state_minimums %>%
             defaultPageSize = 25,
             columns = list(
               STATE = colDef(name = "State"),
-              MIN_ESTIMATE = colDef(name= "Proposed Minimum Wage", cell = function(value){sprintf("$%.2f",value)})
+              MIN_ESTIMATE = colDef(name= "Calculated Minimum Wage", cell = function(value){sprintf("$%.2f",value)})
             ))
 ```
 
-Treating all states equal, we can see that \$12-13 is what an ideal projected federal minimum would look like (depending how much you want to be safe in rounding down). Calling a quick statistical summary will let us know how well this fits on all states.
+Returing to our original time-line, if we were going with a single federal minimum but had the option to change it from $15, based on the figures above, \$12-13 could be what an ideal federal minimum would look like (depending on where you want to round the number). Calling a quick statistical summary will let us know how well this fits on all states.
 
 ```
 > summary(state_minimums$MIN_ESTIMATE)
@@ -195,10 +246,10 @@ Treating all states equal, we can see that \$12-13 is what an ideal projected fe
 > sd(state_minimums$MIN_ESTIMATE)
 [1] 1.578836
 ```
-A standard deviation of \$1.58 isn't terrible but under a dollar is probably ideal. Cases below the 1st quartile (of which there are 12 states) are the most susceptible to inflationary effects, but at the same time \$15 in the states with the highest median wage may not effectively alleviate poverty as well as higher wages would. The theme being observed here is that each state falls anywhere on the spectrum and wages that are sensitive to each scenario are definitely more ideal than one wage between all 50 states. 
+A standard deviation of \$1.58 isn't terrible but for states that are further than one standard deviation away, we begin to significantly depart from intended outcomes. In the CBO study, changing our considerations from \$12 to \$15 meant the difference between a 5% and 25% increase in national unemployment (using a 2019 unemployment total of 5.8 million). Cases below the 1st quartile (of which there are 12 states) are the most susceptible to more extreme disemployment effects, but at the same time the states with the highest median wage may not sufficiently alleviate those under poverty as intended. Again, the theme being observed here is that each state falls anywhere on the economic spectrum and wages that are sensitive to each scenario are a worthy consideration to one wage between all 50 states. 
 
-No doubt that most lawmakers in-favor of \$15 already know this; most the time effective policy advocacy can be more important than nuance, in which case the sentiment isn't something to be condemned. Undoubtedly, the conversation sparked might spur Congress to make the over-due decision to raise the minimum to at least something higher to than its current level (with a bill maintaining the annual raise in median wage increases from the Raise the Wage act) and then local democrats can continue pushing in their respective constituencies. Whatever the outcome, we may want to take a note from Florida and see that ballot initiatives may potentially be a great way to get progressive ideas pushed passed divided sentiments in Congress. 
+While the assumptions of this analysis have centered around the perspective put forward by the CBO paper, its important to note that with minimum wage, it is difficult to have concrete conclusions, even the report states high uncertainty in its results, therefore [criticisms](https://www.ineteconomics.org/perspectives/blog/james-k-galbraith-says-cbo-not-competent-to-assess-economics-of-minimum-wage) on the paper ought to be considered. Undoubtedly though, its important that the minimum wage conversation is sparked, as it might spur Congress to take action on the outdated legislation set currently. This post shouldn't be taken as advocating for or against $15, although whichever wage progressives aspire to, I think this exercise demonstrated the diversity and autonomy of individual states, and with the recent example of Florida, by adhering to that autonomy through ballot initiatives they may potentially be able to get progressive ideas pushed passed divided sentiments in Congress. 
 
 ***
 
-Any criticisms of this post and [repo](https://github.com/KVasq/minimum_wage_2021) are welcome, I am mainly attempting to learn R through topics I find interesting so there is likely to be something I missed, please feel free to comment and recommend changes.
+Any criticisms of this post and [repo](https://github.com/KVasq/minimum_wage_2021) are welcome, I am mainly attempting to learn R through topics I find fascinating so there is likely to be something I missed, please feel free to comment and recommend changes. If you have any interesting papers/articles regarding minimum wage please send those too!
